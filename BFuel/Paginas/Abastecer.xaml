@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BFuel.Paginas.Abastecer"
+             Title="Abastecimento">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="#D1D1D1">
+            <Frame Margin="12,12,12,-15" CornerRadius="13" BorderColor="Gray" >
+                <StackLayout HeightRequest="900">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Preço por litro: " FontSize="18" 
+                           FontAttributes="Bold" TextColor="Black" 
+                           Padding="0,10" FontFamily="Montserrat-Bold"/>
+                        <Entry Placeholder="R$0,000" FontFamily="Montserrat"
+                               HorizontalOptions="FillAndExpand" Keyboard="Numeric" 
+                               ReturnType="Next" x:Name="entPrecoLitro"
+                               TextChanged="EntPrecoLitro_TextChanged" 
+                               />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Total Pago: " FontSize="18" 
+                           FontAttributes="Bold" TextColor="Black" 
+                           Padding="0,10" FontFamily="Montserrat-Bold"/>
+                        <Entry Placeholder="R$0,000" FontFamily="Montserrat"
+                               HorizontalOptions="FillAndExpand" Keyboard="Numeric"
+                               x:Name="entTotalPago" TextChanged="EntTotalPago_TextChanged"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" VerticalOptions="Start">
+                        <Label Text="Total em litros: " FontSize="18" 
+                           FontAttributes="Bold" TextColor="Black" 
+                           Padding="0,10" FontFamily="Montserrat-Bold"/>
+                        <Label Text="0" TextDecorations="Underline"
+                               HorizontalOptions="FillAndExpand"
+                               FontSize="20" FontAttributes="None"
+                               VerticalTextAlignment="Center"
+                               FontFamily="Montserrat"
+                               x:Name="lblTotalLitros"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Local: " FontSize="18" 
+                           FontAttributes="Bold" TextColor="Black" 
+                           Padding="0,10" FontFamily="Montserrat-Bold"/>
+                        <Entry Placeholder="Posto X" FontFamily="Montserrat"
+                               HorizontalOptions="FillAndExpand" Keyboard="Default"
+                               x:Name="entLocalPosto" TextChanged="EntLocalPosto_TextChanged"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" Padding="10,40">
+                        <Image Source="iconepreto.png"/>
+                        <Picker Title="Combustível" TitleColor="LightGray" 
+                                HorizontalOptions="FillAndExpand"
+                                HorizontalTextAlignment="Center"
+                                FontAttributes="Italic" x:Name="pckCombustivel"
+                                SelectedIndexChanged="SelecionaCombustivel" >
+                            <Picker.Items>
+                                <x:String>Gasolina Comum</x:String>
+                                <x:String>Gasolina Aditivada</x:String>
+                                <x:String>Etanol</x:String>
+                                <x:String>Diesel</x:String>
+                                <x:String>Diesel S10</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </StackLayout>
+                    <Button Text="Inserir abastecimento" TextColor="Black"
+                            FontSize="22" FontAttributes="Bold"
+                            Padding="10,20" BackgroundColor="#54BF54"
+                            CornerRadius="36" Margin="0,20" Clicked="InserirAbastecimento"
+                            FontFamily="Montserrat-Bold"/>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

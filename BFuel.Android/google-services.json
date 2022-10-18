@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "623521664375",
+    "project_id": "better-fuel-80b3e",
+    "storage_bucket": "better-fuel-80b3e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:623521664375:android:b0071a43bb84527571e572",
+        "android_client_info": {
+          "package_name": "com.betterfuelapp.bfuel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "623521664375-2daahmtvc6drglebkh91puhc8m7e300o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.betterfuelapp.bfuel",
+            "certificate_hash": "4cb5cea25e50957f56fdd0cb8a935f4fe962ff7c"
+          }
+        },
+        {
+          "client_id": "623521664375-9hr78v0jtgemcb7a1k1i10kjktpqm6l8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_q5rmVVJFj3FVNlgSUVj_WDZg0qiq7Zo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "623521664375-9hr78v0jtgemcb7a1k1i10kjktpqm6l8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<popup:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BFuel.Utility.Load"
+             xmlns:popup="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             CloseWhenBackgroundIsClicked="False">
+    <ActivityIndicator IsRunning="True" Color="#000D8C"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       WidthRequest="100"/>
+</popup:PopupPage>

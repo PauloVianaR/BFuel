@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BFuel.Paginas.PostosRotasMaps"
+             Title="Postos Próximos"
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+             xmlns:CustomControls="clr-namespace:BFuel.CustomViews">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="#000D8C">
+            <Frame HeightRequest="40" Padding="12,12" Margin="5,0">
+                <StackLayout Orientation="Horizontal">
+                    <Frame Padding="0,-2" BackgroundColor="#429E42" CornerRadius="21" x:Name="FrameHeader" WidthRequest="200" >
+                        <CustomControls:BorderlessPicker Title="Combustível" TitleColor="Black" 
+                                x:Name="pckFuels" FontFamily="Montserrat-Bold" 
+                                HorizontalTextAlignment="Center" SelectedIndexChanged="SelectFuel"
+                                SelectedIndex="0">
+                            <CustomControls:BorderlessPicker.Items>
+                                <x:String>Gasolina Comum</x:String>
+                                <x:String>Gasolina Aditivada</x:String>
+                                <x:String>Etanol</x:String>
+                                <x:String>Diesel</x:String>
+                                <x:String>Diesel S10</x:String>
+                            </CustomControls:BorderlessPicker.Items>
+                        </CustomControls:BorderlessPicker>
+                    </Frame>
+                    <Label VerticalTextAlignment="Center" HorizontalOptions="CenterAndExpand">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="⛽ "/>
+                                <Span Text="Postos mais baratos" TextDecorations="Underline" 
+                                      FontFamily="Montserrat-Bold" TextColor="LightBlue"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OpenListGasStations"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+                
+                <!--
+                <StackLayout Orientation="Horizontal" >
+                    <Button Text="Gasolina" TextColor="Black" 
+                            BackgroundColor="#429E42"
+                            CornerRadius="21"
+                            HorizontalOptions="FillAndExpand"
+                            Clicked="SelectGasolina"
+                            x:Name="btnGasolina"
+                            FontFamily="Montserrat-Bold"/>
+                    <Button Text="Etanol" TextColor="Gray" 
+                            BackgroundColor="#B1A452"
+                            CornerRadius="21"
+                            HorizontalOptions="FillAndExpand"
+                            Clicked="SelectEtanol"
+                            x:Name="btnEtanol"
+                            FontFamily="Montserrat-Bold"/>
+                    <Button Text="Diesel" TextColor="Gray" 
+                            BackgroundColor="#FF7126"
+                            CornerRadius="21"
+                            HorizontalOptions="FillAndExpand"
+                            Clicked="SelectDiesel"
+                            x:Name="btnDiesel"
+                            FontFamily="Montserrat-Bold"/>
+                </StackLayout>
+                -->
+            </Frame>
+            <maps:Map x:Name="mapaCentral" MapType="Street" IsShowingUser="True" TrafficEnabled="False"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

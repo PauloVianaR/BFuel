@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BFuel.Paginas.CalcCombustivel"
+             Title="Cálculo de Combustível">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="#D1D1D1">
+            <Frame Margin="12,12,12,-15" BorderColor="Gray" CornerRadius="13">
+                <StackLayout HeightRequest="900">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Autonomia: " FontSize="16" TextColor="Black"
+                               FontAttributes="Bold" Padding="0,10" FontFamily="Montserrat-Bold"/>
+                        <Entry Placeholder="" ReturnType="Next" FontSize="16"
+                               Keyboard="Numeric" HorizontalOptions="FillAndExpand"
+                               Text="70" x:Name="entAutonomia" FontFamily="Montserrat"/>
+                        <Label Text="%" HorizontalOptions="End" FontSize="16" TextColor="Black"
+                               FontAttributes="Bold" Padding="0,10" FontFamily="Montserrat"/>                        
+                    </StackLayout>
+
+                    <Label Text="(Km/L Etanol ÷ Km/L Gasolina) x 100" Padding="0,-5,0,0" 
+                           FontFamily="Montserrat-Light" FontSize="14"/>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Preço Gasolina: " FontSize="16" TextColor="Black"
+                               FontAttributes="Bold" Padding="0,10" FontFamily="Montserrat-Bold"/>
+                        <Entry ReturnType="Next" FontSize="16"
+                               Keyboard="Numeric" HorizontalOptions="FillAndExpand"
+                               x:Name="entPrecoGasolina" FontFamily="Montserrat"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Preço Etanol: " FontSize="16" TextColor="Black"
+                               FontAttributes="Bold" Padding="0,10" FontFamily="Montserrat-Bold"/>
+                        <Entry ReturnType="Next" FontSize="16"
+                               Keyboard="Numeric" HorizontalOptions="FillAndExpand"
+                               x:Name="entPrecoEtanol" FontFamily="Montserrat"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
+                        <Switch ThumbColor="AliceBlue" OnColor="Blue" x:Name="switchOpcao" 
+                                IsToggled="False" Toggled="ChangeLocalEntriesVisibility"/>
+                        <Label Text="Usar função de cálculo entre localidades" FontFamily="Montserrat-Light"
+                               VerticalTextAlignment="Center"/>
+                    </StackLayout>
+
+                    <StackLayout BackgroundColor="AliceBlue" Margin="-12,-6,-12,0" Padding="10,5" 
+                                 Spacing="2" IsVisible="false" x:Name="stcLocalsEntries">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Local saída: " FontSize="16" TextColor="Black"
+                               FontAttributes="Bold" Padding="0,10" FontFamily="Montserrat-Bold"/>
+                            <Entry ReturnType="Next" FontSize="16"
+                               Keyboard="Text"  HorizontalOptions="FillAndExpand"
+                               x:Name="entLocalSaida" FontFamily="Montserrat"
+                               TextChanged="UpdaterStringLocal"/>
+                        </StackLayout>
+
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Local destino: " FontSize="16" TextColor="Black"
+                               FontAttributes="Bold" Padding="0,10" FontFamily="Montserrat-Bold"/>
+                            <Entry ReturnType="Next" FontSize="16"
+                               Keyboard="Text" HorizontalOptions="FillAndExpand"
+                               x:Name="entLocalDestino" FontFamily="Montserrat"
+                               TextChanged="UpdaterStringLocal"/>
+                        </StackLayout>
+
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Kilometragem por litro: " FontSize="16" TextColor="Black"
+                               FontAttributes="Bold" Padding="0,10" FontFamily="Montserrat-Bold"/>
+                            <Entry ReturnType="Done" Placeholder="(Opcional)" FontSize="16"
+                               Keyboard="Numeric" HorizontalOptions="FillAndExpand"
+                               x:Name="entKmL" FontFamily="Montserrat"
+                               TextChanged="DefinerKML"/>
+                        </StackLayout>
+
+                        <Label Text="Se o campo de Km/L não for preenchido, será considerado como 10 Km/L"
+                               FontFamily="Montserrat-Light" FontSize="12"/>
+                    </StackLayout>                  
+
+                    <Button Text="Calcular" FontSize="18" FontAttributes="Bold"
+                            CornerRadius="36" Background="#FF7A7A" Margin="10,10"
+                            Padding="0,14" Clicked="BtnCalcularClicked" FontFamily="Montserrat-Bold"/>
+                    <Label Text="Melhor opção de abastecimento:" TextColor="Black"
+                           FontSize="18" HorizontalTextAlignment="Center"
+                           IsVisible="false" Margin="0,5" x:Name="lblTxtMelhorOpcao" FontFamily="Montserrat-Bold"/>
+                    <Frame BackgroundColor="white" Margin="0,0" IsVisible="false" x:Name="frameOpcao" Padding="0,14">
+                        <Label Text="" x:Name="lblCombustivelSelect"
+                               TextColor="Black" FontSize="18" FontAttributes="bold"
+                               HorizontalTextAlignment="Center" FontFamily="Montserrat-Bold"/>
+                    </Frame>
+
+                    <StackLayout x:Name="stckResults" Margin="0,19,0,0" IsVisible="false">
+                        <Frame BorderColor="Gray">
+                            <Label FontFamily="Montserrat" FontSize="13">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Média a ser gasta com gasolina: "/>
+                                        <Span Text="-" x:Name="spanGas"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </Frame>
+                        <Frame BorderColor="Gray">
+                            <Label FontFamily="Montserrat" FontSize="13">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Média a ser gasta com etanol: "/>
+                                        <Span Text="-" x:Name="spanEtan"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </Frame>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

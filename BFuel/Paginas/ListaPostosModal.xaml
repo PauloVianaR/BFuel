@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BFuel.Paginas.ListaPostosModal">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="#D1D1D1" >
+            <Frame BackgroundColor="#000D8C">
+                <StackLayout Orientation="Horizontal" Spacing="18">
+                    <ImageButton Source="arrow.png" HorizontalOptions="Start" BackgroundColor="#000D8C"
+                         Clicked="BackMapsPage" CornerRadius="30" Margin="0,0,0,-5"/>
+                    <Label Text="Postos mais baratos na região" TextColor="White" VerticalTextAlignment="Center"
+                           FontSize="20" FontFamily="Montserrat-Bold"/>
+                </StackLayout>
+            </Frame>
+
+            <SearchBar CancelButtonColor="#000D8C" Placeholder="Nome da bandeira ou do combustível" 
+                       FontFamily="Montserrat" SearchButtonPressed="SearchNameOrFlag" BackgroundColor="White"
+                       FontSize="16" x:Name="searchBar"/>
+
+            <Frame CornerRadius="5" VerticalOptions="FillAndExpand" Margin="12,0" BorderColor="Gray">
+                <CollectionView x:Name="ListOfGasStations" SelectionMode="Single" SelectionChanged="HowToGo">
+                    <CollectionView.EmptyView>
+                        <Label Text="Buscando postos..."
+                                   TextColor="Black" 
+                                   BackgroundColor="White" 
+                                   Padding="10" 
+                                   FontAttributes="none"
+                                   HorizontalTextAlignment="Center"
+                                   VerticalTextAlignment="Center"
+                                   FontFamily="Montserrat"
+                                   x:Name="lblTextEmptyView"
+                                   FontSize="16"/>
+                    </CollectionView.EmptyView>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="0,4">
+
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+
+                                        <VisualState x:Name="Normal">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="#F2F2F2"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+
+                                        <VisualState x:Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="#FFB1E5FF"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+
+                                <Frame BorderColor="LightGray" BackgroundColor="White">
+                                    <StackLayout>
+                                        <StackLayout Orientation="Horizontal" Margin="-2,2,-2,0">
+                                            <Label Text="{Binding Revenda}" HorizontalOptions="StartAndExpand" 
+                                                            FontSize="16" TextColor="Indigo" FontFamily="Montserrat-Bold"/>
+                                        </StackLayout>
+                                        <Label FontFamily="Montserrat">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="⛽ "/>
+                                                    <Span Text="{Binding Produto}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label FontFamily="Montserrat-Bold">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="💲 Preço: R$"/>
+                                                    <Span Text="{Binding Valor}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label FontFamily="Montserrat" >
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="🏴 Bandeira: "/>
+                                                    <Span Text="{Binding Bandeira}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label FontFamily="Montserrat" >
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="🏙 Cidade: "/>
+                                                    <Span Text="{Binding Municipio}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label FontFamily="Montserrat-Bold" Text="Como chegar?" 
+                                               TextDecorations="Underline" TextColor="LightBlue">
+                                        </Label>
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Frame>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

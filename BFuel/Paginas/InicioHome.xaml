@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BFuel.Paginas.InicioHome"
+             Title="Início">
+    <ContentPage.Content>
+        <StackLayout Background="#D1D1D1">
+            <Frame BorderColor="Gray" BackgroundColor="#A5A7EE" 
+                   Margin="10,15,10,0" CornerRadius="13">
+                <StackLayout>
+                    <Label FontSize="24" FontAttributes="Bold" Padding="0,20" TextColor="Black" 
+                           FontFamily="Montserrat-Bold">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Gastos totais: R$"/>
+                                <Span Text="0,00" x:Name="spanGastosTotais"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label FontSize="24" FontAttributes="Bold" Padding="0,20" TextColor="Black"
+                           FontFamily="Montserrat-Bold">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Total abastecido: "/>
+                                <Span Text="0,00" x:Name="spanTotAbastecido"/>
+                                <Span Text=" L"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+            </Frame>
+
+            <Frame BorderColor="Gray" Margin="10,15,10,-2" CornerRadius="2"
+                   VerticalOptions="FillAndExpand" Padding="10,10,10,10">
+                <StackLayout>
+                    <Label Text="Histórico" FontSize="20" TextColor="Black" Margin="10,7" FontFamily="Montserrat-Bold"/>
+                    <BoxView HeightRequest="1" Color="Gray" Margin="-10,0,-10,2"/>
+
+                    <ActivityIndicator x:Name="actIndicator" IsRunning="True" Color="LightGray"
+                                       VerticalOptions="Center" HorizontalOptions="Center"/>
+
+                    <RefreshView RefreshColor="#000D8C" Refreshing="RefreshSearch" x:Name="rfrView">
+                        <CollectionView x:Name="ListOfSupplies" RemainingItemsThreshold="-1" 
+                                        RemainingItemsThresholdReached="InfinitySearch" ItemSizingStrategy="MeasureAllItems">
+                            <CollectionView.EmptyView>
+                                <Label Text="Carregando..."
+                                   TextColor="Black" 
+                                   BackgroundColor="White" 
+                                   Padding="10" 
+                                   FontAttributes="none"
+                                   HorizontalTextAlignment="Center"
+                                   VerticalTextAlignment="Center"
+                                   FontFamily="Montserrat-Light"
+                                   x:Name="lblInfoEmpView"/>
+                            </CollectionView.EmptyView>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout Padding="0,4">
+                                        <Frame BorderColor="LightGray" BackgroundColor="White">
+                                            <StackLayout>
+                                                <StackLayout Orientation="Horizontal" Margin="0,5,0,0">
+                                                    <Label Text="{Binding LocalName}" HorizontalOptions="StartAndExpand" 
+                                                            FontSize="16" TextColor="Indigo" FontFamily="Montserrat-Bold"/>
+                                                    <Label Text="{Binding InsertedDate}" TextColor="LightGray"
+                                                           FontFamily="Montserrat"/>
+                                                </StackLayout>
+                                                <Label FontFamily="Montserrat">
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="⛽ "/>
+                                                            <Span Text="{Binding FuelName}"/>
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
+                                                <Label FontFamily="Montserrat">
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="💲 Total: R$"/>
+                                                            <Span Text="{Binding TotalPaid}"/>
+                                                            <Span Text=" ("/>
+                                                            <Span Text="{Binding TotalLiters}"/>
+                                                            <Span Text=" L)"/>
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
+                                            </StackLayout>
+                                        </Frame>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </RefreshView>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

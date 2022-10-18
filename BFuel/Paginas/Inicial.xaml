@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BFuel.Paginas.Inicial"
+             xmlns:pages="clr-namespace:BFuel.Paginas">
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TabBarBaseStyle" TargetType="Element">
+                <Setter Property="Shell.BackgroundColor" Value="#000D8C"/>
+                <Setter Property="Shell.TitleColor" Value="White"/>
+
+                <Setter Property="Shell.TabBarBackgroundColor" Value="White"/>
+                <Setter Property="Shell.TabBarTitleColor" Value="#000D8C"/>
+                <Setter Property="Shell.TabBarUnselectedColor" Value="Gray"/>
+            </Style>
+            <Style TargetType="TabBar" BasedOn="{StaticResource TabBarBaseStyle}"></Style>
+        </ResourceDictionary>
+    </Shell.Resources>
+    <TabBar>
+        <ShellContent Title="Início" Icon="iconhome" 
+                      ContentTemplate="{DataTemplate pages:InicioHome}"/>
+        <ShellContent Title="Locais" Icon="mapsicon" 
+                      ContentTemplate="{DataTemplate pages:PostosRotasMaps}"/>
+        <ShellContent Title="Abastecer" Icon="iconplus"
+                      ContentTemplate="{DataTemplate pages:Abastecer}"/>
+        <ShellContent Title="Calc. Valores" Icon="iconcalc"
+                      ContentTemplate="{DataTemplate pages:CalcCombustivel}"/>
+        <ShellContent Title="Mais" Icon="iconconfigs"
+                      ContentTemplate="{DataTemplate pages:Configs}"/>
+    </TabBar>
+</Shell>

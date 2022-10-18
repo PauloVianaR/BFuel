@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BFuel.Paginas.Configs"
+             Title="Configurações">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <Label Padding="10,10,10,3" Margin="0,0" Text="Configurações Gerais" FontSize="16" 
+                       TextColor="Indigo" FontFamily="Montserrat-Bold"/>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Mostrar gastos totais por: " Padding="10,10,10,3" FontFamily="Montserrat"/>
+                    <Picker Title="Selecionar" FontSize="14" HorizontalOptions="FillAndExpand" 
+                            HorizontalTextAlignment="Center" Margin="0,0,5,0" SelectedIndex="0"
+                            x:Name="pckGastosConfig">
+                        <Picker.Items>
+                            <x:String>Todo o período</x:String>
+                            <x:String>Mes</x:String>
+                            <x:String>Semana</x:String>
+                            <x:String>Ano</x:String>
+                        </Picker.Items>
+                    </Picker>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Mostrar total abastecido por: " Padding="10,10,10,3" FontFamily="Montserrat"/>
+                    <Picker Title="Selecionar" FontSize="14" HorizontalOptions="FillAndExpand" 
+                            HorizontalTextAlignment="Center" Margin="0,0,5,0" SelectedIndex="0"
+                            x:Name="pckGastosLitros">
+                        <Picker.Items>
+                            <x:String>Todo o período</x:String>
+                            <x:String>Mes</x:String>
+                            <x:String>Semana</x:String>
+                            <x:String>Ano</x:String>
+                        </Picker.Items>
+                    </Picker>
+                </StackLayout>
+
+                <BoxView HeightRequest="1" HorizontalOptions="Fill" Color="LightGray"/>
+                <Label Text="Configurações do usuário" Padding="10,10,10,3" Margin="0,0" FontSize="16" 
+                       TextColor="Indigo" FontFamily="Montserrat-Bold"/>
+                <Button Text="Loggout" Margin="10,10" FontSize="14" TextColor="Black" FontFamily="Montserrat-Bold"
+                    Padding="20" CornerRadius="30" BackgroundColor="#A5A7EE" Clicked="FazerLoggout"/>
+                <Button Text="Alterar senha" Margin="10,10" FontSize="14" TextColor="Black" FontFamily="Montserrat-Bold"
+                    Padding="20" CornerRadius="30" BackgroundColor="#A5A7EE" Clicked="AlterarSenha"/>
+                
+                <BoxView HeightRequest="1" HorizontalOptions="Fill" Color="LightGray"/>
+                <Label Text="Sobre" Padding="10,10,10,3" Margin="0,0" FontSize="16" TextColor="Indigo" FontFamily="Montserrat"/>
+                <Label Padding="0" Margin="20,20,20,5" FontFamily="Montserrat"
+                   Text="Este aplicativo foi feito utilizando a tecnologia de front-end Xamarin Forms e como back-end o C#, utilizando banco de dados SQLite."/>
+                <Label Padding="0" Margin="20,5,20,5" FontFamily="Montserrat"
+                   Text="Foi construído sem propósito comercial, sendo seu propósito inteiramente acadêmico e para a apresentação do Trabalho de Conclusão de Curso -> Better Fuel: Aplicação móvel para auxiliar no abastecimento de combustíveis"/>
+                <Label Padding="0" Margin="20,5,20,5" FontFamily="Montserrat"
+                   Text="O objetivo deste aplicativo é auxiliar os motoristas a economizar com o gasto no combustível, seja localizando os postos mais baratos ou fazendo um balanço do combustível que mais compensa, dentre outras funcionalidades"/>
+                <Label Padding="0" Margin="20,5,20,5" FontFamily="Montserrat"
+                   Text="Futuramente, este app poderá passar por uma refatoração para ser lançado no mercado através da PlayStore, ou ainda ser desenvolvido para os sistemas operacionais iOS (Iphone e Ipad) e UWP (Windows Phone e semelhantes). Atualmente só está disponíve para Android, preferencialmente do Android 10 em diante."/>
+                <Label Padding="0" Margin="20,5,20,5" FontFamily="Montserrat"
+                   Text="Contato dos desenvolvedores:
+                   pauloricardosmite@outlook.com
+                   gustavoguilherme0712@gmail.com"/>
+
+                <!--Label Padding="0" Margin="20,5,20,5"
+                   Text=""/-->
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

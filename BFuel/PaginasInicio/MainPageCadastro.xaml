@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BFuel.MainPageCadastro">
+    <StackLayout BackgroundColor="#000D8C" Spacing="-40">
+        <ImageButton Source="arrow.png" BackgroundColor="#000D8C" HorizontalOptions="Start" Padding="15,20,0,0" Clicked="VoltarInicio"/>
+        
+        <Frame BorderColor="Gray" 
+               HorizontalOptions="CenterAndExpand" 
+               VerticalOptions="CenterAndExpand"
+               HasShadow="False"
+               IsClippedToBounds="True"
+               WidthRequest="325"
+               HeightRequest="530">
+            <StackLayout Spacing="20">
+                <Label Text="Cadastro" HorizontalTextAlignment="Center" FontFamily="Montserrat-Bold"
+                       FontSize="26" FontAttributes="Bold" TextColor="black" Padding="0,20"/>
+                <Entry Placeholder="Nome" x:Name="entName" Keyboard="Email" ReturnType="Next" FontFamily="Montserrat"/>
+                <Entry Placeholder="Email" x:Name="entEmail" Keyboard="Email" ReturnType="Next" FontFamily="Montserrat"/>
+                <Entry Placeholder="Senha" x:Name="entSenha" IsPassword="True" ReturnType="Next" FontFamily="Montserrat"/>
+                <Entry Placeholder="Confirmar Senha" x:Name="entConfirmSenha" IsPassword="True" ReturnType="Done" FontFamily="Montserrat"/>
+                <Button Text="Cadastrar" CornerRadius="100" TextColor="Black" FontFamily="Montserrat-Bold"
+                        BackgroundColor="#A5A7EE" Margin="0,30" Clicked="RealizarCadastro"/>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</ContentPage>
