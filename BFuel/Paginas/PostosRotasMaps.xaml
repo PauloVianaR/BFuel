@@ -36,32 +36,6 @@
                         </Label.GestureRecognizers>
                     </Label>
                 </StackLayout>
-                
-                <!--
-                <StackLayout Orientation="Horizontal" >
-                    <Button Text="Gasolina" TextColor="Black" 
-                            BackgroundColor="#429E42"
-                            CornerRadius="21"
-                            HorizontalOptions="FillAndExpand"
-                            Clicked="SelectGasolina"
-                            x:Name="btnGasolina"
-                            FontFamily="Montserrat-Bold"/>
-                    <Button Text="Etanol" TextColor="Gray" 
-                            BackgroundColor="#B1A452"
-                            CornerRadius="21"
-                            HorizontalOptions="FillAndExpand"
-                            Clicked="SelectEtanol"
-                            x:Name="btnEtanol"
-                            FontFamily="Montserrat-Bold"/>
-                    <Button Text="Diesel" TextColor="Gray" 
-                            BackgroundColor="#FF7126"
-                            CornerRadius="21"
-                            HorizontalOptions="FillAndExpand"
-                            Clicked="SelectDiesel"
-                            x:Name="btnDiesel"
-                            FontFamily="Montserrat-Bold"/>
-                </StackLayout>
-                -->
             </Frame>
             <maps:Map x:Name="mapaCentral" MapType="Street" IsShowingUser="True" TrafficEnabled="False"/>
         </StackLayout>

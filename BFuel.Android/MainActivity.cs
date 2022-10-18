@@ -42,10 +42,6 @@ namespace BFuel.Droid
                 {
                     RequestPermissions(LocationPermissions, RequestLocationId);
                 }
-                else
-                {
-                    // Permissions already granted - display a message.
-                }
             }
         }
 
@@ -66,15 +62,8 @@ namespace BFuel.Droid
 
             if (requestCode == RequestLocationId)
             {
-                if ((grantResults.Length == 1) && (grantResults[0] == (int)Permission.Granted))
-                {
-
-                }
-                else
-                {
-
-                }
-    }
+                if ((grantResults.Length == 1) && (grantResults[0] == (int)Permission.Granted)) { }
+            }
             else
             {
                 base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
