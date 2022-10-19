@@ -37,7 +37,8 @@
                     </Label>
                 </StackLayout>
             </Frame>
-            <maps:Map x:Name="mapaCentral" MapType="Street" IsShowingUser="True" TrafficEnabled="False"/>
+            <!--maps:Map x:Name="mapaCentral" MapType="Street" IsShowingUser="True" TrafficEnabled="False"/-->
+            <CustomControls:CustomMap x:Name="mapaCentral" MapType="Street"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

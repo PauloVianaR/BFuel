@@ -11,6 +11,7 @@ using Xamarin.Essentials;
 using Rg.Plugins.Popup.Extensions;
 using BFuel.Utility;
 using System.Reflection;
+using BFuel.CustomViews;
 
 namespace BFuel.Paginas
 {
@@ -22,6 +23,7 @@ namespace BFuel.Paginas
             InitializeComponent();
 
             GetLocation();
+            LoadPins();
 
             pckFuels.SelectedIndex = 0;
         }
@@ -78,8 +80,6 @@ namespace BFuel.Paginas
                     Position position = new Position(location.Latitude, location.Longitude);
                     MapSpan mapSpanPosition = MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(1.800));
                     mapaCentral.MoveToRegion(mapSpanPosition);
-
-                    LoadPins();
                 }
 
             }
@@ -93,23 +93,28 @@ namespace BFuel.Paginas
 
         private void LoadPins()
         {
-            Pin pinoteste = new Pin
+            CustomPin pin = new CustomPin
             {
-                Label = "Bom de boca",
-                Address = "Restaurante na rua Amelia Augusta",
+                Label = "Gasolina: R$4,799",
+                Address = "Posto Ipiranga da Mata",
                 Type = PinType.Place,
-                Position = new Position(-19.95264826794483, -44.18626487278566)
+                Position = new Position(-19.95264826794483, -44.18626487278566),
+                Name = "Xamarin",
+                Url = "http://xamarin.com/about/"
             };
-            Pin pinoteste2 = new Pin
+            CustomPin pinoteste2 = new CustomPin
             {
                 Label = "Igreja pentecostal",
                 Address = "Igreja na rua Amelia Augusta",
                 Type = PinType.Place,
-                Position = new Position(-19.953259907720945, -44.18657108418384)
+                Position = new Position(-19.953259907720945, -44.18657108418384),
+                Name = "teste",
+                Url = "http://xamarin.com/about/"
             };
 
-            mapaCentral.Pins.Add(pinoteste);
-            mapaCentral.Pins.Add(pinoteste2);
+            mapaCentral.CustomPins = new List<CustomPin> { pin };
+
+            mapaCentral.Pins.Add(pin);
         }
     }
 }
