@@ -193,63 +193,21 @@ namespace BFuel.Paginas
             try
             {
                 GasStation gs = (GasStation)ListOfGasStations.SelectedItem;
-
-                string localstring = gs.Rua + ","
-                        + gs.Numero.Replace("S/N", "") + ","
-                        + gs.Bairro + ","
-                        + gs.Complemento.Trim() + ","
-                        + gs.Municipio + ","
-                        + gs.Estado + ", Brasil";
-
-                Location_Service _service = new Location_Service();
-                Location result = new Location();
-
-                ResponseService<Locat> responseService = await _service.GetLocationByName(localstring);
-
-                if (!responseService.IsSucess)
+                Location coords = new Location
                 {
-                    if (responseService.StatusCode == 404)
-                    {
-                        await DisplayAlert("Erro!", "Não houveram resultados para as buscas dos locais informados", "OK");
-                        await Navigation.PopAllPopupAsync();
-                    }
-                    else
-                    {
-                        await DisplayAlert("Ops", "Ocorreu um erro inesperado! Tente novamente mais tarde.", "OK");
-                        await Navigation.PopAllPopupAsync();
-                    }
+                    Latitude = gs.Latitude,
+                    Longitude = gs.Longitude
+                };
 
-                }
-                else
-                {
-                    result.Latitude = responseService.Data.results[0].position.lat;
-                    result.Longitude = responseService.Data.results[0].position.lon;
-
-                    await Navigation.PopAllPopupAsync();
-
-                    await OpenMaps(result);
-                }
+                MapLaunchOptions options = new MapLaunchOptions { Name = "Better Fuel", NavigationMode = NavigationMode.Default };
+                await Map.OpenAsync(coords, options);
             }
             catch (Exception ex)
             {
-                await Navigation.PopAllPopupAsync();
-
                 await DisplayAlert("Falha!", ex.Message, "OK");
             }
-        }
 
-        private async Task OpenMaps(Location coords)
-        {
-            MapLaunchOptions options = new MapLaunchOptions { Name = "Better Fuel", NavigationMode = NavigationMode.Default };
-
-            try
-            {
-                await Map.OpenAsync(coords, options);
-            }
-            catch(Exception ex)
-            {
-                await DisplayAlert("Falha!", ex.Message, "OK");
-            }
+            await Navigation.PopAllPopupAsync();
         }
 
         #endregion
