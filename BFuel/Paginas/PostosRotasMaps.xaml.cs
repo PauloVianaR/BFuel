@@ -12,12 +12,21 @@ using Rg.Plugins.Popup.Extensions;
 using BFuel.Utility;
 using System.Reflection;
 using BFuel.CustomViews;
+using MongoDB.Driver;
+using BFuel.BFDomain.Models;
+using BFuel.Servicos;
+using MongoDB.Driver.Linq;
+using BFuel.Modelos;
+using BFuel.Domain.Models;
 
 namespace BFuel.Paginas
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PostosRotasMaps : ContentPage
     {
+        NoSQLService _service;
+        IMongoCollection<GasStation> collection;
+
         public PostosRotasMaps()
         {
             InitializeComponent();
@@ -68,6 +77,7 @@ namespace BFuel.Paginas
 
         private async void GetLocation()
         {
+            await Task.Delay(500);
 
             await Navigation.PushPopupAsync(new Load());
 
@@ -77,7 +87,7 @@ namespace BFuel.Paginas
 
                 if (location != null)
                 {
-                    Position position = new Position(location.Latitude, location.Longitude);
+                    Xamarin.Forms.Maps.Position position = new Xamarin.Forms.Maps.Position(location.Latitude, location.Longitude);
                     MapSpan mapSpanPosition = MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(1.800));
                     mapaCentral.MoveToRegion(mapSpanPosition);
                 }
@@ -91,30 +101,51 @@ namespace BFuel.Paginas
             await Navigation.PopAllPopupAsync();
         }
 
-        private void LoadPins()
+        private async void LoadPins(string fuel = "GASOLINA")
         {
-            CustomPin pin = new CustomPin
-            {
-                Label = "Gasolina: R$4,799",
-                Address = "Posto Ipiranga da Mata",
-                Type = PinType.Place,
-                Position = new Position(-19.95264826794483, -44.18626487278566),
-                Name = "Xamarin",
-                Url = "http://xamarin.com/about/"
-            };
-            CustomPin pinoteste2 = new CustomPin
-            {
-                Label = "Igreja pentecostal",
-                Address = "Igreja na rua Amelia Augusta",
-                Type = PinType.Place,
-                Position = new Position(-19.953259907720945, -44.18657108418384),
-                Name = "teste",
-                Url = "http://xamarin.com/about/"
-            };
+            await Navigation.PushPopupAsync(new Load());
 
-            mapaCentral.CustomPins = new List<CustomPin> { pin };
+            try
+            {
+                MongoClient dbclient = new MongoClient(_service.dbconnection);
+                IMongoDatabase database = dbclient.GetDatabase("bfueldb");
+                collection = database.GetCollection<GasStation>("precos_postos_combustivel");
+                IMongoQueryable<GasStation> queryableGS = collection.AsQueryable()
+                    .Where(a => a.Municipio.Equals("BETIM") && a.Produto.Equals(fuel))
+                    .OrderBy(a => a.Valor);
 
-            mapaCentral.Pins.Add(pin);
+                List<GasStation> items = queryableGS.ToList();
+                List<CustomPin> pinsList = new List<CustomPin>();
+
+                foreach (GasStation gs in items)
+                {
+                    CustomPin pin = new CustomPin
+                    {
+                        Label = fuel + ": R$" + gs.Valor + "9",
+                        Address = gs.Revenda,
+                        Type = PinType.Place,
+                        Position = new Xamarin.Forms.Maps.Position(gs.Latitude, gs.Longitude),
+                        Name = gs.Bandeira,
+                        Url = "http://xamarin.com/about/"
+                    };
+
+                    pinsList.Add(pin);
+                }
+
+                mapaCentral.CustomPins = pinsList;
+
+                foreach (CustomPin pin in pinsList)
+                {
+                    mapaCentral.Pins.Add(pin);
+                }
+            }
+            catch(Exception ex)
+            {
+                await DisplayAlert("Erro", ex.Message, "OK");
+            }
+
+            await Navigation.PopAllPopupAsync();
+
         }
     }
 }

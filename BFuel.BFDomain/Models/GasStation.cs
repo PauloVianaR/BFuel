@@ -66,5 +66,13 @@ namespace BFuel.BFDomain.Models
         [BsonElement("bandeira")]
         [BsonRequired()]
         public string Bandeira { get; set; }
+
+        [BsonElement("latitude")]
+        [BsonRequired()]
+        public double Latitude { get; set; }
+
+        [BsonElement("longitude")]
+        [BsonRequired()]
+        public double Longitude { get; set; }
     }
 }
