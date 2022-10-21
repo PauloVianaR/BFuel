@@ -52,7 +52,7 @@
                                 FontAttributes="Italic" x:Name="pckCombustivel"
                                 SelectedIndexChanged="SelecionaCombustivel" >
                             <Picker.Items>
-                                <x:String>Gasolina Comum</x:String>
+                                <x:String>Gasolina</x:String>
                                 <x:String>Gasolina Aditivada</x:String>
                                 <x:String>Etanol</x:String>
                                 <x:String>Diesel</x:String>

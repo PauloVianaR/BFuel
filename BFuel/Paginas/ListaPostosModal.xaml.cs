@@ -188,8 +188,6 @@ namespace BFuel.Paginas
 
         private async void HowToGo(object sender, EventArgs e)
         {
-            await Navigation.PushPopupAsync(new Load());
-
             try
             {
                 GasStation gs = (GasStation)ListOfGasStations.SelectedItem;
@@ -206,8 +204,6 @@ namespace BFuel.Paginas
             {
                 await DisplayAlert("Falha!", ex.Message, "OK");
             }
-
-            await Navigation.PopAllPopupAsync();
         }
 
         #endregion

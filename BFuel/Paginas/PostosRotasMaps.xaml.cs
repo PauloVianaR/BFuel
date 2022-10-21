@@ -18,55 +18,73 @@ using BFuel.Servicos;
 using MongoDB.Driver.Linq;
 using BFuel.Modelos;
 using BFuel.Domain.Models;
+using System.Collections.ObjectModel;
 
 namespace BFuel.Paginas
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PostosRotasMaps : ContentPage
     {
-        NoSQLService _service;
+        NoSQLService _service = new NoSQLService();
         IMongoCollection<GasStation> collection;
+        Location currentLocation;
+        bool allowPickerChanges = false;
+        //String currentCity; -> TO DO
 
         public PostosRotasMaps()
         {
             InitializeComponent();
 
-            GetLocation();
-            LoadPins();
-
             pckFuels.SelectedIndex = 0;
+
+            LoadAll();
         }
 
-        private void SelectFuel(object sender, EventArgs e)
+        private async void LoadAll()
+        {
+            await LoadMap();
+            await LoadPins();
+            allowPickerChanges = true;
+        }
+
+        private async void SelectFuel(object sender, EventArgs e)
         {
             string pickeritem = ((Picker)sender).SelectedItem.ToString();
 
-            switch (pickeritem)
+            if (allowPickerChanges)
             {
-                case "Gasolina Comum":
-                    FrameHeader.BackgroundColor = Color.FromHex("#429E42");
-                    break;
+                switch (pickeritem)
+                {
+                    case "Gasolina Comum":
+                        FrameHeader.BackgroundColor = Color.FromHex("#429E42");
+                        await LoadPins();
+                        break;
 
-                case "Gasolina Aditivada":
-                    FrameHeader.BackgroundColor = Color.FromHex("#FF5BC65B");
-                    break;
+                    case "Gasolina Aditivada":
+                        FrameHeader.BackgroundColor = Color.FromHex("#FF5BC65B");
+                        await LoadPins("GASOLINA ADITIVADA");
+                        break;
 
-                case "Etanol":
-                    FrameHeader.BackgroundColor = Color.FromHex("#B1A452");
-                    break;
+                    case "Etanol":
+                        FrameHeader.BackgroundColor = Color.FromHex("#B1A452");
+                        await LoadPins("ETANOL");
+                        break;
 
-                case "Diesel":
-                    FrameHeader.BackgroundColor = Color.FromHex("#FF7126");
-                    break;
+                    case "Diesel":
+                        FrameHeader.BackgroundColor = Color.FromHex("#FF7126");
+                        await LoadPins("DIESEL");
+                        break;
 
-                case "Diesel S10":
-                    FrameHeader.Background = Color.FromHex("#FFFF9761");
-                    break;
+                    case "Diesel S10":
+                        FrameHeader.Background = Color.FromHex("#FFFF9761");
+                        await LoadPins("DIESEL S10");
+                        break;
 
-                default:
-                    FrameHeader.BackgroundColor = Color.FromHex("#429E42");
-                    break;
-            }
+                    default:
+                        FrameHeader.BackgroundColor = Color.FromHex("#429E42");
+                        break;
+                }
+            }            
         }
 
         private void OpenListGasStations(object sender, EventArgs e)
@@ -75,20 +93,18 @@ namespace BFuel.Paginas
         }
 
 
-        private async void GetLocation()
+        private async Task LoadMap()
         {
-            await Task.Delay(500);
-
             await Navigation.PushPopupAsync(new Load());
 
             try
             {
-                Location location = await Geolocation.GetLastKnownLocationAsync();
+                currentLocation = await Geolocation.GetLastKnownLocationAsync();
 
-                if (location != null)
+                if (currentLocation != null)
                 {
-                    Xamarin.Forms.Maps.Position position = new Xamarin.Forms.Maps.Position(location.Latitude, location.Longitude);
-                    MapSpan mapSpanPosition = MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(1.800));
+                    Xamarin.Forms.Maps.Position position = new Xamarin.Forms.Maps.Position(currentLocation.Latitude, currentLocation.Longitude);
+                    MapSpan mapSpanPosition = MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(1.600));
                     mapaCentral.MoveToRegion(mapSpanPosition);
                 }
 
@@ -98,12 +114,22 @@ namespace BFuel.Paginas
                 await DisplayAlert("Erro", ex.Message, "OK");
             }
 
-            await Navigation.PopAllPopupAsync();
+            try
+            {
+                await Navigation.PopAllPopupAsync();
+            }
+            catch (Exception) { }
         }
 
-        private async void LoadPins(string fuel = "GASOLINA")
+        private async Task LoadPins(string fuel = "GASOLINA")
         {
             await Navigation.PushPopupAsync(new Load());
+
+            if (mapaCentral.Pins.Count > 0)
+            {
+                mapaCentral.Pins.Clear();
+                mapaCentral.CustomPins.Clear();
+            }
 
             try
             {
@@ -115,7 +141,14 @@ namespace BFuel.Paginas
                     .OrderBy(a => a.Valor);
 
                 List<GasStation> items = queryableGS.ToList();
-                List<CustomPin> pinsList = new List<CustomPin>();
+                ObservableCollection<CustomPin> pinsList = new ObservableCollection<CustomPin>();
+
+                if(items.Count < 1)
+                {
+                    throw new Exception("Nenhum posto localizado para esse tipo de combustível!");
+                }
+
+                await Task.Delay(1000);
 
                 foreach (GasStation gs in items)
                 {
@@ -126,26 +159,39 @@ namespace BFuel.Paginas
                         Type = PinType.Place,
                         Position = new Xamarin.Forms.Maps.Position(gs.Latitude, gs.Longitude),
                         Name = gs.Bandeira,
-                        Url = "http://xamarin.com/about/"
+                        Url = "https://www.google.com.br/maps/dir/" 
+                            + currentLocation.Latitude.ToString() 
+                            + "," + currentLocation.Longitude.ToString() 
+                            + "/" + gs.Latitude.ToString() 
+                            + "," + gs.Longitude.ToString()
                     };
-
                     pinsList.Add(pin);
                 }
-
                 mapaCentral.CustomPins = pinsList;
 
                 foreach (CustomPin pin in pinsList)
                 {
                     mapaCentral.Pins.Add(pin);
                 }
+
+                await Task.Delay(2000);
             }
             catch(Exception ex)
             {
-                await DisplayAlert("Erro", ex.Message, "OK");
+                await DisplayAlert("Ops", ex.Message, "OK");
+
+                if(mapaCentral.Pins.Count > 0)
+                {
+                    mapaCentral.Pins.Clear();
+                    mapaCentral.CustomPins.Clear();
+                }
             }
 
-            await Navigation.PopAllPopupAsync();
-
+            try
+            {
+                await Navigation.PopAllPopupAsync();
+            }
+            catch (Exception) { }
         }
     }
 }

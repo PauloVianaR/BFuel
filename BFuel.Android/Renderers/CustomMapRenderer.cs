@@ -10,8 +10,10 @@ using BFuel.CustomViews;
 using BFuel.Droid.Renderers;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Xamarin.Forms.Maps.Android;
@@ -23,7 +25,8 @@ namespace BFuel.Droid.Renderers
     {
         public CustomMapRenderer(Context context) : base(context) { }
 
-        public List<CustomPin> customPins;
+        public ObservableCollection<CustomPin> customPins;
+        CustomMap formsMap;
 
         protected override void OnElementChanged(Xamarin.Forms.Platform.Android.ElementChangedEventArgs<Map> e)
         {
@@ -36,7 +39,7 @@ namespace BFuel.Droid.Renderers
 
             if (e.NewElement != null)
             {
-                var formsMap = (CustomMap)e.NewElement;
+                formsMap = (CustomMap)e.NewElement;
                 customPins = formsMap.CustomPins;
             }
         }
@@ -55,7 +58,8 @@ namespace BFuel.Droid.Renderers
             marker.SetPosition(new LatLng(pin.Position.Latitude, pin.Position.Longitude));
             marker.SetTitle(pin.Label);
             marker.SetSnippet(pin.Address);
-            marker.SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.pin));
+            marker.SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.gasmapicon));
+            customPins = formsMap.CustomPins;
             return marker;
         }
 
@@ -64,7 +68,7 @@ namespace BFuel.Droid.Renderers
             var customPin = GetCustomPin(e.Marker);
             if (customPin == null)
             {
-                throw new Exception("Custom pin not found");
+                throw new Exception("Marcador de mapa não encontrado!");
             }
 
             if (!string.IsNullOrWhiteSpace(customPin.Url))
@@ -86,7 +90,7 @@ namespace BFuel.Droid.Renderers
                 var customPin = GetCustomPin(marker);
                 if (customPin == null)
                 {
-                    throw new Exception("Custom pin not found");
+                    throw new Exception("Marcador de mapa não encontrado!");
                 }
 
                 if (customPin.Name.Equals("Xamarin"))
@@ -120,7 +124,7 @@ namespace BFuel.Droid.Renderers
             return null;
         }
 
-        CustomPin GetCustomPin(Marker annotation)
+        public CustomPin GetCustomPin(Marker annotation)
         {
             var position = new Position(annotation.Position.Latitude, annotation.Position.Longitude);
             foreach (var pin in customPins)
@@ -130,6 +134,7 @@ namespace BFuel.Droid.Renderers
                     return pin;
                 }
             }
+
             return null;
         }
     }
