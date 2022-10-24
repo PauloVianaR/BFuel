@@ -29,7 +29,7 @@ namespace BFuel.Paginas
         IMongoCollection<GasStation> collection;
         Location currentLocation;
         bool allowPickerChanges = false;
-        //String currentCity; -> TO DO
+        String currentCity;
 
         public PostosRotasMaps()
         {
@@ -43,6 +43,8 @@ namespace BFuel.Paginas
         private async void LoadAll()
         {
             await LoadMap();
+            await GetCurrentCity();
+            await Task.Delay(1500);
             await LoadPins();
             allowPickerChanges = true;
         }
@@ -92,6 +94,41 @@ namespace BFuel.Paginas
             Navigation.PushModalAsync(new ListaPostosModal());
         }
 
+        private async Task GetCurrentCity()
+        {
+            currentCity = "BETIM";
+            // TO DO
+            /*
+            Location_Service _service = new Location_Service();
+
+            Location pos = await Geolocation.GetLastKnownLocationAsync();
+
+            await Navigation.PushPopupAsync(new Load());
+
+            try
+            {
+                ResponseService<GoogleLocat> responseService = await _service.GetLocationByCoords(pos.Latitude,pos.Longitude);
+
+                if (!responseService.IsSucess)
+                {
+                    if (responseService.StatusCode == 404)
+                        await DisplayAlert("Erro!", "Não houveram resultados para as buscas dos locais informados", "OK");
+                    else
+                        await DisplayAlert("Ops", "Ocorreu um erro inesperado! Tente novamente mais tarde.", "OK");
+                }
+                else
+                {
+                    currentCity = responseService.Data.results[0].adress_components[1].short_name.ToUpper();
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", ex.Message, "OK");
+            }
+
+            await Navigation.PopAllPopupAsync();
+            */
+        }
 
         private async Task LoadMap()
         {
@@ -137,7 +174,7 @@ namespace BFuel.Paginas
                 IMongoDatabase database = dbclient.GetDatabase("bfueldb");
                 collection = database.GetCollection<GasStation>("precos_postos_combustivel");
                 IMongoQueryable<GasStation> queryableGS = collection.AsQueryable()
-                    .Where(a => a.Municipio.Equals("BETIM") && a.Produto.Equals(fuel))
+                    .Where(a => a.Municipio.Equals(currentCity.ToUpper()) && a.Produto.Equals(fuel))
                     .OrderBy(a => a.Valor);
 
                 List<GasStation> items = queryableGS.ToList();
@@ -178,7 +215,10 @@ namespace BFuel.Paginas
             }
             catch(Exception ex)
             {
-                await DisplayAlert("Ops", ex.Message, "OK");
+                if (ex.Message.Contains("posto"))
+                    await DisplayAlert("Ops", ex.Message, "OK");
+                else
+                    await DisplayAlert("Ops", "Nenhum posto encontrado no momento... \nTente novamente mais tarde!", "OK");
 
                 if(mapaCentral.Pins.Count > 0)
                 {

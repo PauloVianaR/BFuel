@@ -49,19 +49,21 @@ namespace BFuel.Paginas
             await GetGasStationsList();
         }
         private async void SearchNameOrFlag(object sender, EventArgs e)
-        {
+        {            
             cheapest_stations.Clear();
 
             await GetGasStationsList(((SearchBar)sender).Text);
         }
-        private void NotFoundResponse()
+        private void NotFoundResponse(bool showMessage = true)
         {
-            DisplayAlert("Ops!", "Nenhum posto encontrado no momento. Tente novamente mais tarde", "OK");
+            if (showMessage)
+            {
+                DisplayAlert("Ops!", "Nenhum posto encontrado no momento. Tente novamente mais tarde", "OK");
+            }
 
             lblTextEmptyView.Text = "Nenhum posto encontrado";
         }
 
-        #region SearchFlow
         private async Task GetGasStationsList(string search = "")
         {
             string _search = search.ToUpper().TrimStart().TrimEnd();
@@ -125,6 +127,7 @@ namespace BFuel.Paginas
             }
         }
 
+        #region SearchFlow
         private void GetGasStationsForFlag(string flag)
         {
             string fuel = "GASOLINA";
@@ -137,6 +140,10 @@ namespace BFuel.Paginas
             {
                 fuel = "ADITIVADA";
             }
+            else if (flag.Contains("S10"))
+            {
+                fuel = "DIESEL S10";
+            }
             else if (flag.Contains("DIESEL"))
             {
                 fuel = "DIESEL";
@@ -148,15 +155,7 @@ namespace BFuel.Paginas
                 .Take(10);
 
             List<GasStation> items = queryableGS.ToList();
-
-            if(items.Count == 0)
-            {
-                NotFoundResponse();
-            }
-            else
-            {
-                FillListofStations(items);
-            }
+            FillListHandler(items);
         }
 
         private void GetGasStationsForFuel(string fuel = "GASOLINA")
@@ -167,8 +166,19 @@ namespace BFuel.Paginas
                 .Take(10);
 
             List<GasStation> items = queryableGS.ToList();
+            FillListHandler(items);
+        }
 
-            FillListofStations(items);
+        void FillListHandler(List<GasStation> items)
+        {
+            if (items.Count == 0)
+            {
+                NotFoundResponse(false);
+            }
+            else
+            {
+                FillListofStations(items);
+            }
         }
 
         private void FillListofStations(List<GasStation> items)

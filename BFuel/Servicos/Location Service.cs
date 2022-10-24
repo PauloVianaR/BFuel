@@ -1,4 +1,5 @@
-﻿using BFuel.Domain.Models;
+﻿using BFuel.BFDomain.Models;
+using BFuel.Domain.Models;
 using BFuel.Modelos;
 using Newtonsoft.Json;
 using System;
@@ -29,6 +30,32 @@ namespace BFuel.Servicos
             {
                 string problemResponse = await response.Content.ReadAsStringAsync();
                 var errors = JsonConvert.DeserializeObject<ResponseService<Locat>>(problemResponse);
+
+                responseService.Errors = errors.Errors;
+            }
+            return responseService;
+        }
+
+        public async Task<ResponseService<GoogleLocat>> GetLocationByCoords(double lat, double lon)
+        {
+            string coords = lat.ToString().Replace(",",".") + "," + lon.ToString().Replace(",", ".");
+
+            HttpResponseMessage response = await _client.GetAsync($"{BaseApiUrlCoords}&latlng={coords}");
+
+            ResponseService<GoogleLocat> responseService = new ResponseService<GoogleLocat>
+            {
+                IsSucess = response.IsSuccessStatusCode,
+                StatusCode = (int)response.StatusCode
+            };
+
+            if (response.IsSuccessStatusCode)
+            {
+                responseService.Data = await response.Content.ReadAsAsync<GoogleLocat>();
+            }
+            else
+            {
+                string problemResponse = await response.Content.ReadAsStringAsync();
+                var errors = JsonConvert.DeserializeObject<ResponseService<GoogleLocat>>(problemResponse);
 
                 responseService.Errors = errors.Errors;
             }
