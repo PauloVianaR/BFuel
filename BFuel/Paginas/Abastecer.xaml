@@ -14,7 +14,7 @@
                         <Entry Placeholder="R$0,000" FontFamily="Montserrat"
                                HorizontalOptions="FillAndExpand" Keyboard="Numeric" 
                                ReturnType="Next" x:Name="entPrecoLitro"
-                               TextChanged="EntPrecoLitro_TextChanged" 
+                               TextChanged="SelectLiterPrice" 
                                />
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
@@ -23,7 +23,7 @@
                            Padding="0,10" FontFamily="Montserrat-Bold"/>
                         <Entry Placeholder="R$0,000" FontFamily="Montserrat"
                                HorizontalOptions="FillAndExpand" Keyboard="Numeric"
-                               x:Name="entTotalPago" TextChanged="EntTotalPago_TextChanged"/>
+                               x:Name="entTotalPago" TextChanged="SelectTotalPaid"/>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal" VerticalOptions="Start">
                         <Label Text="Total em litros: " FontSize="18" 
@@ -42,7 +42,7 @@
                            Padding="0,10" FontFamily="Montserrat-Bold"/>
                         <Entry Placeholder="Posto X" FontFamily="Montserrat"
                                HorizontalOptions="FillAndExpand" Keyboard="Default"
-                               x:Name="entLocalPosto" TextChanged="EntLocalPosto_TextChanged"/>
+                               x:Name="entLocalPosto" TextChanged="SelectGasStation"/>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal" Padding="10,40">
                         <Image Source="iconepreto.png"/>
@@ -50,7 +50,7 @@
                                 HorizontalOptions="FillAndExpand"
                                 HorizontalTextAlignment="Center"
                                 FontAttributes="Italic" x:Name="pckCombustivel"
-                                SelectedIndexChanged="SelecionaCombustivel" >
+                                SelectedIndexChanged="SelectFuel" >
                             <Picker.Items>
                                 <x:String>Gasolina</x:String>
                                 <x:String>Gasolina Aditivada</x:String>
@@ -63,7 +63,7 @@
                     <Button Text="Inserir abastecimento" TextColor="Black"
                             FontSize="22" FontAttributes="Bold"
                             Padding="10,20" BackgroundColor="#54BF54"
-                            CornerRadius="36" Margin="0,20" Clicked="InserirAbastecimento"
+                            CornerRadius="36" Margin="0,20" Clicked="InsertSupply"
                             FontFamily="Montserrat-Bold"/>
                 </StackLayout>
             </Frame>

@@ -17,7 +17,7 @@ namespace BFuel.Paginas
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CalcCombustivel : ContentPage
     {
-        private const bool ValidationLocal = true;
+        private readonly bool ValidationLocal = true;
         private decimal kmL = 10;
 
         public CalcCombustivel()
@@ -84,7 +84,7 @@ namespace BFuel.Paginas
                 if (autonomia > 0 && precogas > 0 && precoalcool > 0)
                     CalculateCompensation(autonomia, precogas, precoalcool);
                 else
-                    ErrorMessage();
+                    throw new Exception();
             }
             catch (Exception)
             {
@@ -146,7 +146,7 @@ namespace BFuel.Paginas
                     await CalculateInfoLocation(precogas, precoalcool);
                 }
                 else
-                    ErrorMessage();
+                    throw new Exception();
             }
             catch (Exception)
             {
@@ -163,6 +163,7 @@ namespace BFuel.Paginas
         {
             decimal distancia = await GetDistanceBetween();
             decimal totalLitros;
+            decimal autonomia = Convert.ToDecimal(entAutonomia.Text) < 1 ? 70 : Convert.ToDecimal(entAutonomia.Text);
 
             if(distancia != 0)
             {
@@ -171,7 +172,7 @@ namespace BFuel.Paginas
                 totalLitros = distancia / kmL;
 
                 spanGas.Text = "R$ " + Math.Round(totalLitros * precogas, 2) + " (" + Math.Round(totalLitros).ToString() + " L)";
-                spanEtan.Text = "R$ " + Math.Round(totalLitros * precoalcool, 2) + " (" + Math.Round(totalLitros).ToString() + " L)";
+                spanEtan.Text = "R$ " + Math.Round(totalLitros * precoalcool, 2) + " (" + Math.Round(totalLitros + (totalLitros * autonomia / 100), 2).ToString() + " L)";
             }
         }
 

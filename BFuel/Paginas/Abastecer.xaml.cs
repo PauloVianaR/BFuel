@@ -32,17 +32,17 @@ namespace BFuel.Paginas
         private string combustivel = "";
         private string localPosto = "";
 
-        private void EntPrecoLitro_TextChanged(object sender, TextChangedEventArgs e)
+        private void SelectLiterPrice(object sender, TextChangedEventArgs e)
         {
-            CalcTotalLitros();
+            CalcTotalLiters();
         }
 
-        private void EntTotalPago_TextChanged(object sender, TextChangedEventArgs e)
+        private void SelectTotalPaid(object sender, TextChangedEventArgs e)
         {
-            CalcTotalLitros();
+            CalcTotalLiters();
         }
 
-        private void CalcTotalLitros()
+        private void CalcTotalLiters()
         {
             try
             {
@@ -51,7 +51,7 @@ namespace BFuel.Paginas
 
                 if (totPago != 0 && valorLitro != 0)
                 {
-                    totalLitros = lblTotalLitros.Text = (Math.Round(totPago / valorLitro, 2)).ToString();
+                    totalLitros = lblTotalLitros.Text = Math.Round(totPago / valorLitro, 2).ToString();
                     lblTotalLitros.Text = totalLitros + " L";
                 }
             }
@@ -63,17 +63,17 @@ namespace BFuel.Paginas
             }
         }
 
-        private void SelecionaCombustivel(object sender, EventArgs e)
+        private void SelectFuel(object sender, EventArgs e)
         {
             combustivel = pckCombustivel.SelectedItem.ToString();
         }
 
-        private void EntLocalPosto_TextChanged(object sender, TextChangedEventArgs e)
+        private void SelectGasStation(object sender, TextChangedEventArgs e)
         {
             localPosto = entLocalPosto.Text;
         }
 
-        private async void InserirAbastecimento(object sender, EventArgs e)
+        private async void InsertSupply(object sender, EventArgs e)
         {
             await Navigation.PushPopupAsync(new Load());
 
