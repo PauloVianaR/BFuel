@@ -17,6 +17,7 @@ using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using Xamarin.Essentials;
 using BFuel.Modelos;
+using GoogleMaps.LocationServices;
 
 namespace BFuel.Paginas
 {
@@ -49,7 +50,7 @@ namespace BFuel.Paginas
             await GetGasStationsList();
         }
         private async void SearchNameOrFlag(object sender, EventArgs e)
-        {            
+        {
             cheapest_stations.Clear();
 
             await GetGasStationsList(((SearchBar)sender).Text);

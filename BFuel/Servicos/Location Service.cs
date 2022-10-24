@@ -4,9 +4,11 @@ using BFuel.Modelos;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace BFuel.Servicos
 {
@@ -36,30 +38,14 @@ namespace BFuel.Servicos
             return responseService;
         }
 
-        public async Task<ResponseService<GoogleLocat>> GetLocationByCoords(double lat, double lon)
+        public async Task<string> GetLocationByCoords(Location coords)
         {
-            string coords = lat.ToString().Replace(",",".") + "," + lon.ToString().Replace(",", ".");
+            IEnumerable<Placemark> add = await Geocoding.GetPlacemarksAsync(coords);
+            List<Placemark> lista = new List<Placemark>();
+            lista = add.ToList();
 
-            HttpResponseMessage response = await _client.GetAsync($"{BaseApiUrlCoords}&latlng={coords}");
-
-            ResponseService<GoogleLocat> responseService = new ResponseService<GoogleLocat>
-            {
-                IsSucess = response.IsSuccessStatusCode,
-                StatusCode = (int)response.StatusCode
-            };
-
-            if (response.IsSuccessStatusCode)
-            {
-                responseService.Data = await response.Content.ReadAsAsync<GoogleLocat>();
-            }
-            else
-            {
-                string problemResponse = await response.Content.ReadAsStringAsync();
-                var errors = JsonConvert.DeserializeObject<ResponseService<GoogleLocat>>(problemResponse);
-
-                responseService.Errors = errors.Errors;
-            }
-            return responseService;
+            string local = lista[0].SubAdminArea.ToUpper();
+            return local;
         }
     }
 }

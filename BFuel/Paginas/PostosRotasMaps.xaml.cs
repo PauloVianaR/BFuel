@@ -25,11 +25,12 @@ namespace BFuel.Paginas
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PostosRotasMaps : ContentPage
     {
-        NoSQLService _service = new NoSQLService();
-        IMongoCollection<GasStation> collection;
+        readonly NoSQLService _service = new NoSQLService();
         Location currentLocation;
+        IMongoCollection<GasStation> collection;
         bool allowPickerChanges = false;
-        String currentCity;
+        bool allowLoadPins = false;
+        string currentCity;
 
         public PostosRotasMaps()
         {
@@ -44,8 +45,9 @@ namespace BFuel.Paginas
         {
             await LoadMap();
             await GetCurrentCity();
-            await Task.Delay(1500);
-            await LoadPins();
+            await Task.Delay(1500);            
+            if(allowLoadPins)
+                await LoadPins();
             allowPickerChanges = true;
         }
 
@@ -53,7 +55,7 @@ namespace BFuel.Paginas
         {
             string pickeritem = ((Picker)sender).SelectedItem.ToString();
 
-            if (allowPickerChanges)
+            if (allowPickerChanges && allowLoadPins)
             {
                 switch (pickeritem)
                 {
@@ -96,38 +98,19 @@ namespace BFuel.Paginas
 
         private async Task GetCurrentCity()
         {
-            currentCity = "BETIM";
-            // TO DO
-            /*
-            Location_Service _service = new Location_Service();
-
-            Location pos = await Geolocation.GetLastKnownLocationAsync();
-
-            await Navigation.PushPopupAsync(new Load());
-
             try
             {
-                ResponseService<GoogleLocat> responseService = await _service.GetLocationByCoords(pos.Latitude,pos.Longitude);
+                Location coords = await Geolocation.GetLastKnownLocationAsync();
 
-                if (!responseService.IsSucess)
-                {
-                    if (responseService.StatusCode == 404)
-                        await DisplayAlert("Erro!", "Não houveram resultados para as buscas dos locais informados", "OK");
-                    else
-                        await DisplayAlert("Ops", "Ocorreu um erro inesperado! Tente novamente mais tarde.", "OK");
-                }
-                else
-                {
-                    currentCity = responseService.Data.results[0].adress_components[1].short_name.ToUpper();
-                }
+                Location_Service _service = new Location_Service();
+                currentCity = await _service.GetLocationByCoords(coords);
+                allowLoadPins = true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                await DisplayAlert("Erro", ex.Message, "OK");
-            }
-
-            await Navigation.PopAllPopupAsync();
-            */
+                await DisplayAlert("Ops", "Falha ao recuperar cidade atual... \nTente novamente mais tarde!", "OK");
+                allowLoadPins = false;
+            }            
         }
 
         private async Task LoadMap()
@@ -174,7 +157,7 @@ namespace BFuel.Paginas
                 IMongoDatabase database = dbclient.GetDatabase("bfueldb");
                 collection = database.GetCollection<GasStation>("precos_postos_combustivel");
                 IMongoQueryable<GasStation> queryableGS = collection.AsQueryable()
-                    .Where(a => a.Municipio.Equals(currentCity.ToUpper()) && a.Produto.Equals(fuel))
+                    .Where(a => a.Municipio.Equals(currentCity) && a.Produto.Equals(fuel))
                     .OrderBy(a => a.Valor);
 
                 List<GasStation> items = queryableGS.ToList();
