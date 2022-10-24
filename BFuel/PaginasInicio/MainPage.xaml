@@ -4,30 +4,35 @@
              x:Class="BFuel.MainPage"
              NavigationPage.HasNavigationBar="False">
 
-    <StackLayout BackgroundColor="#000D8C" Spacing="10">
+    <StackLayout BackgroundColor="#000D8C">
         <Frame BorderColor="Gray" 
                HorizontalOptions="CenterAndExpand" 
                VerticalOptions="CenterAndExpand"
                HasShadow="False"
                IsClippedToBounds="True"
-               WidthRequest="325"
-               HeightRequest="450">
-            <StackLayout Spacing="20">
+               WidthRequest="330"
+               HeightRequest="500">
+            <StackLayout Spacing="15">
                 <Label Text="Login com" HorizontalTextAlignment="Center"
                        FontSize="26" FontAttributes="Bold" TextColor="black" Padding="0,20" 
                        FontFamily="Montserrat-Bold"/>
                 <StackLayout Orientation="Horizontal">
-                    <Button Text="Google" CornerRadius="100" HorizontalOptions="FillAndExpand" FontFamily="Montserrat"
-                            Clicked="LoginGoogle" />
-                    <Button Text="facebook" CornerRadius="100" HorizontalOptions="FillAndExpand" FontFamily="Montserrat"
-                            Clicked="LoginFacebook" />
+                    <ImageButton CornerRadius="100" HorizontalOptions="FillAndExpand" HeightRequest="70" WidthRequest="70"
+                            Clicked="LoginGoogle" Source="googleicon.png" BackgroundColor="White" Aspect="AspectFit" />
+                    <ImageButton CornerRadius="100" HorizontalOptions="FillAndExpand" HeightRequest="70" WidthRequest="70"
+                            Clicked="LoginFacebook" Source="facebookicon.png" BackgroundColor="White" Aspect="AspectFit"/>
                 </StackLayout>
+                <Label Text="OU" FontFamily="Montserrat-Bold" FontSize="20" HorizontalTextAlignment="Center" Margin="0,9,0,-10"/>
                 <Entry Placeholder="email" x:Name="entEmail" Keyboard="Email" ReturnType="Next" FontFamily="Montserrat"/>
                 <Entry Placeholder="senha" x:Name="entSenha" IsPassword="True" ReturnType="Done" FontFamily="Montserrat"/>
                 <Button Text="Login" CornerRadius="100" TextColor="Black" BackgroundColor="#A5A7EE" 
                         Clicked="LoginDefault" FontFamily="Montserrat-Bold"/>
-                <Label Text="Esqueci minha senha" FontAttributes="Italic" TextDecorations="Underline" TextColor="LightBlue"
-                       />
+                <Label Text="Esqueci minha senha" FontAttributes="Italic" TextDecorations="Underline" TextColor="LightBlue">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="PasswordRetriever"/>
+                    </Label.GestureRecognizers>
+                </Label>
+
                 <StackLayout Orientation="Horizontal" Padding="0,20">
                     <Label Text="Ainda não é cadastrado?" HorizontalTextAlignment="Center" FontFamily="Montserrat"/>
                     <Label Text="Cadastrar agora!" FontAttributes="Bold" TextColor="LightBlue" 

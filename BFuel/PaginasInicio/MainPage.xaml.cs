@@ -124,5 +124,10 @@ namespace BFuel
         {
             App.Current.MainPage = new PaginasInicio.LoginFacebookPage();
         }
+
+        private void PasswordRetriever(object sender, EventArgs e)
+        {
+            DisplayAlert("Aviso", "Funcionalidade indisponível no momento(WIP)", "OK");
+        }
     }
 }
