@@ -25,12 +25,12 @@ namespace BFuel.Domain.Models
         public string Password { get; set; }
 
         [Display(Name = "TotalExpenses", ResourceType = typeof(BFuel.Domain.Utility.Language.Fields))]
-        public int TotalExpenses_Config { get; set; }
+        public int TotalExpenses_Config { get; set; } = -1;
 
         [Display(Name = "TotalSupplied", ResourceType = typeof(BFuel.Domain.Utility.Language.Fields))]
-        public int TotalSupplied_Config { get; set; }
+        public int TotalSupplied_Config { get; set; } = -1;
 
         [Display(Name = "UserType", ResourceType = typeof(BFuel.Domain.Utility.Language.Fields))]
-        public int UserType { get; set; }
+        public int UserType { get; set; } = 0;
     }
 }
