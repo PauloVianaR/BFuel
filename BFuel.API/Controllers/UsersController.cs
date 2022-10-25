@@ -38,5 +38,15 @@ namespace BFuel.Api.Controllers
 
             return CreatedAtAction(nameof(GetUser), new { email = user.Email, password = user.Password }, user);
         }
+
+        [HttpPut]
+        public IActionResult ChangePassword(User user)
+        {
+            User newUser = _data.Users.Find(user.Id);
+            _data.Users.Update(newUser);
+            _data.SaveChanges();
+
+            return new JsonResult(newUser);
+        }
     }
 }

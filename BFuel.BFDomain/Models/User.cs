@@ -23,5 +23,14 @@ namespace BFuel.Domain.Models
         [Display(Name = "Password", ResourceType = typeof(BFuel.BFDomain.Utility.Fields))]
         [Required(ErrorMessageResourceType = typeof(BFuel.BFDomain.Utility.Messages), ErrorMessageResourceName = "MSG_E001")]
         public string Password { get; set; }
+
+        [Display(Name = "TotalExpenses", ResourceType = typeof(BFuel.BFDomain.Utility.Fields))]
+        public int TotalExpenses_Config { get; set; }
+
+        [Display(Name = "TotalSupplied", ResourceType = typeof(BFuel.BFDomain.Utility.Fields))]
+        public int TotalSupplied_Config { get; set; }
+
+        [Display(Name = "UserType", ResourceType = typeof(BFuel.BFDomain.Utility.Fields))]
+        public int UserType { get; set; }
     }
 }

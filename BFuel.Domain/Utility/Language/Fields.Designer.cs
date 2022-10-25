@@ -115,6 +115,15 @@ namespace BFuel.Domain.Utility.Language {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Gastos Totais.
+        /// </summary>
+        public static string TotalExpenses {
+            get {
+                return ResourceManager.GetString("TotalExpenses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Total em litros.
         /// </summary>
         public static string TotalLiters {
@@ -129,6 +138,24 @@ namespace BFuel.Domain.Utility.Language {
         public static string TotalPaid {
             get {
                 return ResourceManager.GetString("TotalPaid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Total abastecido.
+        /// </summary>
+        public static string TotalSupplied {
+            get {
+                return ResourceManager.GetString("TotalSupplied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Tipo de usuário.
+        /// </summary>
+        public static string UserType {
+            get {
+                return ResourceManager.GetString("UserType", resourceCulture);
             }
         }
     }

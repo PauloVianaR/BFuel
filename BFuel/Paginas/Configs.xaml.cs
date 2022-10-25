@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using RestSharp;
 
 namespace BFuel.Paginas
 {
@@ -30,9 +31,9 @@ namespace BFuel.Paginas
             App.Current.MainPage = pginicial;
         }
 
-        private void AlterarSenha(object sender, EventArgs e)
+        private async void AlterarSenha(object sender, EventArgs e)
         {
-            DisplayAlert("Falha (WIP)", "Funcionalidade não disponível no momento (Work in progress)", "OK");
+            await DisplayAlert("Falha (WIP)", "Funcionalidade não disponível no momento (Work in progress)", "OK");         
         }
     }
 }

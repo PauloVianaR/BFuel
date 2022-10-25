@@ -9,10 +9,7 @@ namespace BFuel.Api.DataBase
 {
     public class BFuelContext : DbContext
     {
-        public BFuelContext(DbContextOptions<BFuelContext> options) : base(options)
-        {
-
-        }
+        public BFuelContext(DbContextOptions<BFuelContext> options) : base(options) { }
 
         //aqui estamos definindo as tabelas do banco SQLite
         public DbSet<User> Users { get; set; }

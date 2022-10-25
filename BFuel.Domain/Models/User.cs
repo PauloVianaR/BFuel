@@ -13,7 +13,6 @@ namespace BFuel.Domain.Models
 
         [Display(Name="Name", ResourceType = typeof(BFuel.Domain.Utility.Language.Fields))]
         [Required(ErrorMessageResourceType = typeof(BFuel.Domain.Utility.Language.Messages), ErrorMessageResourceName = "MSG_E001")]
-        //Required -> informa ao banco que o campo não pode ser nulo
         public string Name { get; set; }
 
         [Display(Name = "Email", ResourceType = typeof(BFuel.Domain.Utility.Language.Fields))]
@@ -24,5 +23,14 @@ namespace BFuel.Domain.Models
         [Display(Name = "Password", ResourceType = typeof(BFuel.Domain.Utility.Language.Fields))]
         [Required(ErrorMessageResourceType = typeof(BFuel.Domain.Utility.Language.Messages), ErrorMessageResourceName = "MSG_E001")]
         public string Password { get; set; }
+
+        [Display(Name = "TotalExpenses", ResourceType = typeof(BFuel.Domain.Utility.Language.Fields))]
+        public int TotalExpenses_Config { get; set; }
+
+        [Display(Name = "TotalSupplied", ResourceType = typeof(BFuel.Domain.Utility.Language.Fields))]
+        public int TotalSupplied_Config { get; set; }
+
+        [Display(Name = "UserType", ResourceType = typeof(BFuel.Domain.Utility.Language.Fields))]
+        public int UserType { get; set; }
     }
 }
