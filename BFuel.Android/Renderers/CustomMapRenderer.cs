@@ -93,13 +93,29 @@ namespace BFuel.Droid.Renderers
                     throw new Exception("Marcador de mapa não encontrado!");
                 }
 
-                if (customPin.Name.Equals("Xamarin"))
+                view = inflater.Inflate(Resource.Layout.MapInfoWindow, null);
+
+                switch (customPin.Name.ToString())
                 {
-                    view = inflater.Inflate(Resource.Layout.XamarinMapInfoWindow, null);
-                }
-                else
-                {
-                    view = inflater.Inflate(Resource.Layout.MapInfoWindow, null);
+                    case "ALESAT":
+                        view = inflater.Inflate(Resource.Layout.AlesatMapInfoWindow, null);
+                        break;
+
+                    case "IPIRANGA":
+                        view = inflater.Inflate(Resource.Layout.IpirangaMapInfoWindow, null);
+                        break;
+
+                    case "RAIZEN":
+                        view = inflater.Inflate(Resource.Layout.RaizenMapInfoWindow, null);
+                        break;
+
+                    case "VIBRA ENERGIA":
+                        view = inflater.Inflate(Resource.Layout.VibraMapInfoWindow, null);
+                        break;
+
+                    default:
+                        view = inflater.Inflate(Resource.Layout.MapInfoWindow, null);
+                        break;
                 }
 
                 var infoTitle = view.FindViewById<TextView>(Resource.Id.InfoWindowTitle);
