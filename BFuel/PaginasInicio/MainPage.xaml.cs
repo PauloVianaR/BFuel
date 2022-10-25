@@ -77,8 +77,9 @@ namespace BFuel
             await Navigation.PushModalAsync(new MainPageCadastro());
         }
 
-        private void LoginGoogle(object sender, EventArgs e)
+        private async void LoginGoogle(object sender, EventArgs e)
         {
+            await Navigation.PushPopupAsync(new Load());
             _googleManager.Login(OnLoginComplete);
         }
 
@@ -88,36 +89,48 @@ namespace BFuel
             string senha = googleUser.Password;
             string nome = googleUser.Name;
 
-            if(googleUser != null)
+            try
             {
-                ResponseService<User> responseService = await _userservice.GetUser(email, senha);
-
-                if (!responseService.IsSucess)
+                if (googleUser != null)
                 {
-                    if(responseService.StatusCode == 404)
-                    {
-                        await Navigation.PushPopupAsync(new Load());
-                        await _registerservice.Register(nome, email, senha);
-                        string messagex = _registerservice.Message;
-                        await Navigation.PopAllPopupAsync();
+                    ResponseService<User> responseService = await _userservice.GetUser(email, senha);
 
-                        await DisplayAlert("Informação", messagex, "OK");
+                    if (!responseService.IsSucess)
+                    {
+                        if (responseService.StatusCode == 404)
+                        {
+                            await _registerservice.Register(nome, email, senha);
+                            string messagex = _registerservice.Message;
+                            await Navigation.PopAllPopupAsync();
+
+                            await DisplayAlert("Informação", messagex, "OK");
+                        }
+                        else
+                        {
+                            await Navigation.PopAllPopupAsync();
+                            await DisplayAlert("Ops", "Ocorreu um erro inesperado! Tente novamente mais tarde.", "OK");
+                        }
                     }
                     else
-                        await DisplayAlert("Ops", "Ocorreu um erro inesperado! Tente novamente mais tarde.", "OK");                   
+                    {
+                        await Navigation.PopAllPopupAsync();
+                        await LoginMaster(email, senha);
+                    }
+
                 }
                 else
                 {
-                    await LoginMaster(email, senha);
+                    await Navigation.PopAllPopupAsync();
+                    await DisplayAlert("Ops!", message, "OK");
+                    App.GoToMain("Erro");
                 }
-
             }
-            else
+            catch (Exception)
             {
-                await DisplayAlert("Ops!", message, "OK");
-
-                App.GoToMain("Erro");
+                await Navigation.PopAllPopupAsync();
+                await DisplayAlert("Aviso", "Falha ao conectar com nossos serviços! \nVerifique a conexão com a internet e tente novamente", "OK");
             }
+            
         }
 
         private void LoginFacebook(object sender, EventArgs e)

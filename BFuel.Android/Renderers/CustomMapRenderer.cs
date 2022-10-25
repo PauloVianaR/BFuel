@@ -95,28 +95,14 @@ namespace BFuel.Droid.Renderers
 
                 view = inflater.Inflate(Resource.Layout.MapInfoWindow, null);
 
-                switch (customPin.Name.ToString())
+                view = customPin.Name.ToString() switch
                 {
-                    case "ALESAT":
-                        view = inflater.Inflate(Resource.Layout.AlesatMapInfoWindow, null);
-                        break;
-
-                    case "IPIRANGA":
-                        view = inflater.Inflate(Resource.Layout.IpirangaMapInfoWindow, null);
-                        break;
-
-                    case "RAIZEN":
-                        view = inflater.Inflate(Resource.Layout.RaizenMapInfoWindow, null);
-                        break;
-
-                    case "VIBRA ENERGIA":
-                        view = inflater.Inflate(Resource.Layout.VibraMapInfoWindow, null);
-                        break;
-
-                    default:
-                        view = inflater.Inflate(Resource.Layout.MapInfoWindow, null);
-                        break;
-                }
+                    "ALESAT" => inflater.Inflate(Resource.Layout.AlesatMapInfoWindow, null),
+                    "IPIRANGA" => inflater.Inflate(Resource.Layout.IpirangaMapInfoWindow, null),
+                    "RAIZEN" => inflater.Inflate(Resource.Layout.RaizenMapInfoWindow, null),
+                    "VIBRA ENERGIA" => inflater.Inflate(Resource.Layout.VibraMapInfoWindow, null),
+                    _ => inflater.Inflate(Resource.Layout.MapInfoWindow, null),
+                };
 
                 var infoTitle = view.FindViewById<TextView>(Resource.Id.InfoWindowTitle);
                 var infoSubtitle = view.FindViewById<TextView>(Resource.Id.InfoWindowSubtitle);
