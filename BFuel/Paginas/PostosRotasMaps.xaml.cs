@@ -180,10 +180,10 @@ namespace BFuel.Paginas
                         Position = new Xamarin.Forms.Maps.Position(gs.Latitude, gs.Longitude),
                         Name = gs.Bandeira,
                         Url = "https://www.google.com.br/maps/dir/" 
-                            + currentLocation.Latitude.ToString() 
-                            + "," + currentLocation.Longitude.ToString() 
-                            + "/" + gs.Latitude.ToString() 
-                            + "," + gs.Longitude.ToString()
+                            + currentLocation.Latitude.ToString().Replace(",",".") 
+                            + "," + currentLocation.Longitude.ToString().Replace(",",".") 
+                            + "/" + gs.Latitude.ToString().Replace(",",".")
+                            + "," + gs.Longitude.ToString().Replace(",",".")
                     };
                     pinsList.Add(pin);
                 }

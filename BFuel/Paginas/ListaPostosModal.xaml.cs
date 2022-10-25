@@ -195,8 +195,6 @@ namespace BFuel.Paginas
         }
         #endregion
 
-        #region OpenMapFlow
-
         private async void HowToGo(object sender, EventArgs e)
         {
             try
@@ -216,7 +214,5 @@ namespace BFuel.Paginas
                 await DisplayAlert("Falha!", ex.Message, "OK");
             }
         }
-
-        #endregion
     }
 }
