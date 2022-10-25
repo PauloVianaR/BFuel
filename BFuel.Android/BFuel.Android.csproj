@@ -111,6 +111,10 @@
     <AndroidResource Include="Resources\drawable\iconconfigs.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BFuel.BFDomain\BFuel.BFDomain.csproj">
+      <Project>{4787C7AE-EEF3-49D9-A5F9-8D089BF6CB83}</Project>
+      <Name>BFuel.BFDomain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BFuel\BFuel.csproj">
       <Project>{7594AF01-74C7-43F3-8FCE-FCB50C42D2AE}</Project>
       <Name>BFuel</Name>

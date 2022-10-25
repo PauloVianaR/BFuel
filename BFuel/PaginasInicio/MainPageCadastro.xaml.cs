@@ -1,4 +1,5 @@
-﻿using BFuel.Domain.Models;
+﻿using BFuel.BFDomain.Models;
+using BFuel.Domain.Models;
 using BFuel.Modelos;
 using BFuel.Servicos;
 using BFuel.Utility;
@@ -54,7 +55,7 @@ namespace BFuel
         {
             try
             {
-                await _service.Register(nome, email, senha);
+                await _service.Register(nome, email, senha, (int)UserTypes.Types.Email_Pass);
 
                 string message = message = _service.Message;
 

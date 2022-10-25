@@ -12,6 +12,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using Rg.Plugins.Popup.Extensions;
 using BFuel.Utility;
+using BFuel.BFDomain.Models;
 
 namespace BFuel
 {
@@ -99,7 +100,7 @@ namespace BFuel
                     {
                         if (responseService.StatusCode == 404)
                         {
-                            await _registerservice.Register(nome, email, senha);
+                            await _registerservice.Register(nome, email, senha, (int)UserTypes.Types.Google);
                             string messagex = _registerservice.Message;
                             await Navigation.PopAllPopupAsync();
 

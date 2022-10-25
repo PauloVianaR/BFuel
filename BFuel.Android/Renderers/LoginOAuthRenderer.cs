@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 using BFuel.Droid.Renderers;
 using BFuel.PaginasInicio;
 using BFuel.Servicos;
+using BFuel.BFDomain.Models;
 
 [assembly:ExportRenderer(typeof(LoginFacebookPage),typeof(LoginOAuthRenderer))]
 namespace BFuel.Droid.Renderers
@@ -51,7 +52,7 @@ namespace BFuel.Droid.Renderers
 
                     _service = new RegisterService();
 
-                    await _service.Register(name, email, id);
+                    await _service.Register(name, email, id, (int)UserTypes.Types.Facebook);
 
                     if (!_service.IsSucessful)
                         Redirect();

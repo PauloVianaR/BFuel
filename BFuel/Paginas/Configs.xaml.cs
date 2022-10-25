@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BFuel.BFDomain.Models;
+using BFuel.Domain.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +9,6 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using RestSharp;
 
 namespace BFuel.Paginas
 {
@@ -33,7 +35,14 @@ namespace BFuel.Paginas
 
         private async void AlterarSenha(object sender, EventArgs e)
         {
-            await DisplayAlert("Falha (WIP)", "Funcionalidade não disponível no momento (Work in progress)", "OK");         
+            User user = JsonConvert.DeserializeObject<User>(App.Current.Properties["User"].ToString());
+
+            if (user.UserType == (int)UserTypes.Types.Google || user.UserType == (int)UserTypes.Types.Facebook)
+            {
+                await DisplayAlert("Ops", "Se você fez o login com uma conta Google ou Facebook não será possível altera a senha!", "OK");
+            }
+            else
+                await DisplayAlert("Teste", user.UserType.ToString(), "OK");
         }
     }
 }

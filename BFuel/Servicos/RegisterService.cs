@@ -13,7 +13,7 @@ namespace BFuel.Servicos
         public string Message {get; set;}
         public bool IsSucessful;
 
-        public async Task Register(string nome, string email, string senha)
+        public async Task Register(string nome, string email, string senha, int userType)
         {
             UserService _service = new UserService();
 
@@ -23,7 +23,10 @@ namespace BFuel.Servicos
             {
                 Name = nome,
                 Email = email,
-                Password = senha
+                Password = senha,
+                TotalExpenses_Config = 1,
+                TotalSupplied_Config = 1,
+                UserType = userType
             };
 
             ResponseService<User> responseService = await _service.AddUser(user);
