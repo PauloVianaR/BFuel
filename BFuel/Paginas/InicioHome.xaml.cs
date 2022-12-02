@@ -23,6 +23,8 @@ namespace BFuel.Paginas
         private ObservableCollection<Supply> _listOfSupplies;
         private int _pageCount = 0;
         private int _listOfSuppliesFirstRequest;
+        private int TotExpConfig;
+        private int TotSuppConfig;
         public InicioHome()
         {
             InitializeComponent();
@@ -41,7 +43,7 @@ namespace BFuel.Paginas
             }
             catch (Exception)
             {
-                await DisplayAlert("Ops", "Ocorreu um erro inesperado! Tente fazer login novamente.", "OK");
+                await DisplayAlert("Ops", "Ocorreu um erro inesperado! Tente fazer o login novamente.", "OK");
 
                 App.Current.Properties.Remove("User");
                 await App.Current.SavePropertiesAsync();
@@ -52,6 +54,8 @@ namespace BFuel.Paginas
         private async Task LoadHistoric()
         {
             User user = JsonConvert.DeserializeObject<User>(App.Current.Properties["User"].ToString());
+            TotExpConfig = user.TotalExpenses_Config;
+            TotSuppConfig = user.TotalSupplied_Config;
 
             ResponseService<List<Supply>> responseService = await _service.GetSupplies(user.Id);
 
@@ -61,9 +65,19 @@ namespace BFuel.Paginas
             }
             else
             {
-                _listOfSupplies = new ObservableCollection<Supply>(responseService.Data);
+                DateTime dateCalc = GetDateTime(TotExpConfig);
+
+                if(dateCalc < DateTime.UtcNow.AddHours(-3).AddMinutes(10))
+                    _listOfSupplies = new ObservableCollection<Supply>(responseService.Data);
+                else
+                {
+                    _listOfSupplies = new ObservableCollection<Supply>(responseService.Data.Where(sup =>
+                        Convert.ToDateTime(sup.InsertedDate) <= dateCalc));
+                }
+
+
                 _listOfSuppliesFirstRequest = _listOfSupplies.Count();
-                ListOfSupplies.ItemsSource = _listOfSupplies; // define o conteúdo da lista
+                ListOfSupplies.ItemsSource = _listOfSupplies;
                 _pageCount = 1;
                 ListOfSupplies.RemainingItemsThreshold = 1;
             }
@@ -138,6 +152,37 @@ namespace BFuel.Paginas
             await Task.Delay(1000);
 
             ((RefreshView)sender).IsRefreshing = false;
+        }
+
+        private DateTime GetDateTime(int config)
+        {
+            DateTime dt_now = DateTime.UtcNow.AddHours(-3);
+            DateTime newDate = dt_now;
+
+            switch (config)
+            {
+                case 0:
+                    newDate = dt_now;
+                    break;
+
+                case 1:
+                    newDate = dt_now.AddMonths(-1);
+                    break;
+
+                case 2:
+                    newDate = dt_now.AddDays(-7);
+                    break;
+
+                case 3:
+                    newDate = dt_now.AddYears(-1);
+                    break;
+
+                default:
+                    newDate = dt_now;
+                    break;
+            }
+
+            return newDate;
         }
     }
 }

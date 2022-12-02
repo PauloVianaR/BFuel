@@ -12,7 +12,7 @@
                     <Label Text="Mostrar gastos totais por: " Padding="10,10,10,3" FontFamily="Montserrat"/>
                     <Picker Title="Selecionar" FontSize="14" HorizontalOptions="FillAndExpand" 
                             HorizontalTextAlignment="Center" Margin="0,0,5,0" SelectedIndex="0"
-                            x:Name="pckGastosConfig">
+                            x:Name="pckGastosConfig" SelectedIndexChanged="ChangeConfigs" >
                         <Picker.Items>
                             <x:String>Todo o período</x:String>
                             <x:String>Mes</x:String>
@@ -25,7 +25,7 @@
                     <Label Text="Mostrar total abastecido por: " Padding="10,10,10,3" FontFamily="Montserrat"/>
                     <Picker Title="Selecionar" FontSize="14" HorizontalOptions="FillAndExpand" 
                             HorizontalTextAlignment="Center" Margin="0,0,5,0" SelectedIndex="0"
-                            x:Name="pckGastosLitros">
+                            x:Name="pckGastosLitros" SelectedIndexChanged="ChangeConfigs" >
                         <Picker.Items>
                             <x:String>Todo o período</x:String>
                             <x:String>Mes</x:String>
@@ -46,13 +46,13 @@
                 <BoxView HeightRequest="1" HorizontalOptions="Fill" Color="LightGray"/>
                 <Label Text="Sobre" Padding="10,10,10,3" Margin="0,0" FontSize="16" TextColor="Indigo" FontFamily="Montserrat"/>
                 <Label Padding="0" Margin="20,20,20,5" FontFamily="Montserrat"
-                   Text="Este aplicativo foi feito utilizando a tecnologia de front-end Xamarin Forms e como back-end o C#, utilizando banco de dados SQLite."/>
+                   Text="Este aplicativo foi feito utilizando a tecnologia de front-end Xamarin Forms e como back-end o C#, utilizando os bancos de dados SQLite e NoSQL."/>
                 <Label Padding="0" Margin="20,5,20,5" FontFamily="Montserrat"
                    Text="Foi construído sem propósito comercial, sendo seu propósito inteiramente acadêmico e para a apresentação do Trabalho de Conclusão de Curso -> Better Fuel: Aplicação móvel para auxiliar no abastecimento de combustíveis"/>
                 <Label Padding="0" Margin="20,5,20,5" FontFamily="Montserrat"
                    Text="O objetivo deste aplicativo é auxiliar os motoristas a economizar com o gasto no combustível, seja localizando os postos mais baratos ou fazendo um balanço do combustível que mais compensa, dentre outras funcionalidades"/>
                 <Label Padding="0" Margin="20,5,20,5" FontFamily="Montserrat"
-                   Text="Futuramente, este app poderá passar por uma refatoração para ser lançado no mercado através da PlayStore, ou ainda ser desenvolvido para os sistemas operacionais iOS (Iphone e Ipad) e UWP (Windows Phone e semelhantes). Atualmente só está disponíve para Android, preferencialmente do Android 10 em diante."/>
+                   Text="Futuramente, este app poderá passar por uma refatoração para ser lançado no mercado através da PlayStore, ou ainda ser desenvolvido para os sistemas operacionais iOS (Iphone e Ipad) e UWP (Windows Phone e semelhantes). Atualmente só está disponíve para Android, preferencialmente do Android 5 em diante."/>
                 <Label Padding="0" Margin="20,5,20,5" FontFamily="Montserrat"
                    Text="Contato dos desenvolvedores:
                    pauloricardosmite@outlook.com
